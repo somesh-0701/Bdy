@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Surprise</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #111;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Login Screen */
+    #login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #000, #444);
+      flex-direction: column;
+      text-align: center;
+    }
+
+    #login h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #eee;
+    }
+
+    #login input {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      margin: 5px;
+      font-size: 1rem;
+      background: #222;
+      color: #fff;
+    }
+
+    #login button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      margin: 5px;
+      font-size: 1rem;
+      background: #666;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    #login button:hover {
+      background: #999;
+    }
+
+    /* Surprise Screen */
+    #surprise {
+      display: none;
+      text-align: center;
+      padding: 50px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .birthday-text {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 4rem;
+      animation: fadeIn 3s ease-in-out;
+      color: purple;
+      text-shadow: 0 0 20px rgba(128,0,128,0.9), 0 0 40px rgba(128,0,128,0.7);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #personalMessage {
+      margin: 20px 0;
+      font-size: 1.3rem;
+      color: #ddd;
+    }
+     .gallery {
+      position: relative;
+      width: 600px;
+      height: 520px;
+      margin: 50px auto;
+    }
+
+    .gallery img {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255,64,129,0.6);
+      transition: transform 0.5s, box-shadow 0.5s;
+      cursor: pointer;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 40px rgba(255,64,129,1);
+    }
+
+    /* Heart Gallery (your previous code style) */
+    /* .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .gallery img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer; */
+    /* } */
+     .gallery img:nth-child(1) { top: 60px; left: 250px; }
+    .gallery img:nth-child(2) { top: 20px; left: 180px; }
+    .gallery img:nth-child(3) { top: 20px; left: 320px; }
+    .gallery img:nth-child(4) { top: 100px; left: 120px; }
+    .gallery img:nth-child(5) { top: 100px; left: 380px; }
+    .gallery img:nth-child(6) { top: 180px; left: 80px; }
+    .gallery img:nth-child(7) { top: 180px; left: 420px; }
+    .gallery img:nth-child(8) { top: 260px; left: 150px; }
+    .gallery img:nth-child(9) { top: 260px; left: 350px; }
+    .gallery img:nth-child(10) { top: 340px; left: 250px; }
+
+    .gallery img:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 40px rgba(128,0,128,0.9);
+    }
+
+    /* Orbiting "Lub U" text */
+    .orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: center;
+      animation: orbitAnim 12s linear infinite;
+      pointer-events: none;
+    }
+
+    .orbit span {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: purple;
+      filter: drop-shadow(0 0 10px purple);
+      animation: glowPulse 2s infinite alternate;
+    }
+
+    @keyframes orbitAnim {
+      from { transform: rotate(0deg) translateX(360px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(360px) rotate(-360deg); }
+    }
+
+    @keyframes glowPulse {
+      from {
+        text-shadow: 0 0 5px purple, 0 0 15px rgba(128,0,128,0.8);
+      }
+      to {
+        text-shadow: 0 0 30px purple, 0 0 60px rgba(128,0,128,1);
+      }
+    }
+
+    /* Floating classy quotes (fade in/out under title) */
+    .quote {
+      margin-top: 20px;
+      font-size: 1.4rem;
+      color: #ccc;
+      opacity: 0;
+      animation: fadeQuotes 6s ease-in-out forwards;
+    }
+
+    @keyframes fadeQuotes {
+      0% { opacity: 0; transform: translateY(20px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-20px); }
+    }
+
+    /* Falling hearts */
+    .heart {
+      position: fixed;
+      top: -10px;
+      color: red;
+      font-size: 20px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Login Page -->
+  <div id="login">
+    <h1>Enter Your Name & Password to Unlock Surprise 🎁</h1>
+    <input type="text" id="nameInput" placeholder="Your Name" />
+    <input type="password" id="passwordInput" placeholder="Password" />
+    <button onclick="showSurprise()">Login</button>
+  </div>
+
+  <!-- Surprise Page -->
+  <div id="surprise">
+    <h1 class="birthday-text">Happy Birthday 🎉</h1>
+    <p id="personalMessage"></p>
+
+    <!-- Orbiting Text -->
+    <div class="orbit"><span>Lub U</span></div>
+
+    <!-- Quotes container -->
+    <div id="quotesContainer"></div>
+
+    <!-- Gallery -->
+    <div class="gallery">
+      <img src="IMG-20250820-WA0001.jpg" alt="Memory 1">
+      <img src="IMG-20250820-WA0002.jpg" alt="Memory 2">
+      <img src="IMG-20250820-WA0003.jpg" alt="Memory 3">
+      <img src="IMG-20250820-WA0004.jpg" alt="Memory 4">
+      <img src="IMG-20250820-WA0005.jpg" alt="Memory 5">
+      <img src="IMG-20250820-WA0006.jpg" alt="Memory 6">
+      <img src="IMG-20250820-WA0007.jpg" alt="Memory 7">
+      <img src="IMG-20250820-WA0008.jpg" alt="Memory 8">
+      <img src="IMG-20250820-WA0009.jpg" alt="Memory 9">
+      <img src="IMG-20250820-WA0010.jpg" alt="Memory 10">
+    </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="bgaud.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function showSurprise() {
+      const name = document.getElementById('nameInput').value.trim();
+      const password = document.getElementById('passwordInput').value.trim();
+      if(name === "" || password === ""){
+        alert("Please enter your name and password");
+        return;
+      }
+      if(password !== "Munima"){
+        alert("Incorrect Password ❌");
+        return;
+      }
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('surprise').style.display = 'block';
+      document.getElementById('personalMessage').innerText =
+        `Enoda  ${name}, Ennala ithan di Panna Mudinjithu Wish You Happy Birthday! ❤️`;
+
+      document.getElementById("bgMusic").play();
+
+      // Classy fade quotes below title
+      const quotes = [
+        "You are my today and all of my tomorrows 💖",
+        "In your smile, I see something more beautiful than stars ✨",
+        "Every love story is beautiful, but ours is my favorite ❤️",
+        "Eppavum Enkuda Unna Happy Ah vachippan🌹"
+      ];
+      let i = 0;
+      const quoteBox = document.getElementById("quotesContainer");
+      function showQuote(){
+        quoteBox.innerHTML = "";
+        let q = document.createElement("div");
+        q.className = "quote";
+        q.style.animationDelay = "0s";
+        q.innerText = quotes[i];
+        quoteBox.appendChild(q);
+        i = (i+1) % quotes.length;
+      }
+      showQuote();
+      setInterval(showQuote, 6000);
+
+      // Falling hearts
+      setInterval(() => {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (3 + Math.random()*5) + "s";
+        heart.innerHTML = "❤️";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(), 8000);
+      }, 500);
+    }
+  </script>
+
+</body>
+</html>
